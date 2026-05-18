@@ -27,9 +27,7 @@ jobs:
       - name: 4. Run MLflow Project (Training)
         run: |
           cd MLProject_folder
-          # Sapu bersih semua folder pelacakan lama jika ada
           rm -rf mlruns/
-          # Eksekusi langsung file Python secara murni untuk memaksa pembaruan kode
           python modelling_tuning.py
 
       - name: 5. Log in to Docker Hub
@@ -44,7 +42,7 @@ jobs:
           RUN_PATH=$(ls -td mlruns/0/* | grep -v 'meta.yaml' | head -1)
           RUN_ID=$(basename "$RUN_PATH")
           echo "Model berhasil dilatih dengan Run ID: $RUN_ID"
-          # Kita buat docker dengan flag local env murni
+          # KUNCI UTAMA: Menambahkan --env-manager=local di proses build-docker
           mlflow models build-docker -m mlruns/0/$RUN_ID/artifacts/model -n ${{ secrets.DOCKER_USERNAME }}/credit-scoring-model:latest --env-manager=local
 
       - name: 7. Push Docker Image to Docker Hub

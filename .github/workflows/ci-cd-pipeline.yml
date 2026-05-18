@@ -41,7 +41,7 @@ jobs:
           RUN_PATH=$(ls -td mlruns/0/* | grep -v 'meta.yaml' | head -1)
           RUN_ID=$(basename "$RUN_PATH")
           echo "Model berhasil dilatih dengan Run ID: $RUN_ID"
-          mlflow models build-docker -m mlruns/0/$RUN_ID/artifacts/model -n ${{ secrets.DOCKER_USERNAME }}/credit-scoring-model:latest
+          mlflow models build-docker -m mlruns/0/$RUN_ID/artifacts/model -n ${{ secrets.DOCKER_USERNAME }}/credit-scoring-model:latest --env-manager=conda
 
       - name: 7. Push Docker Image to Docker Hub
         run: |

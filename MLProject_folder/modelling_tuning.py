@@ -70,7 +70,7 @@ def objective(trial):
         custom_env = {
             'channels': ['conda-forge'],
             'dependencies': [
-                'python=3.10.12',  # <--- KITA GUNAKAN VERSI 3.10 YANG LEBIH STABIL
+                'python=3.10.12',
                 'pip',
                 {'pip': ['mlflow==2.19.0', 'pandas', 'scikit-learn', 'numpy', 'optuna', 'matplotlib', 'seaborn']}
             ],
@@ -86,5 +86,3 @@ if __name__ == "__main__":
     study.optimize(objective, n_trials=3)
 
     print("\n✅ Tuning Selesai!")
-    print("Parameter Terbaik:", study.best_params)
-    print("F1-Score Terbaik:", study.best_value)

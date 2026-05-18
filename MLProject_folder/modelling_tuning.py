@@ -70,7 +70,7 @@ def objective(trial):
         custom_env = {
             'channels': ['conda-forge'],
             'dependencies': [
-                'python=3.12.7',
+                'python=3.10.12',  # <--- KITA GUNAKAN VERSI 3.10 YANG LEBIH STABIL
                 'pip',
                 {'pip': ['mlflow==2.19.0', 'pandas', 'scikit-learn', 'numpy', 'optuna', 'matplotlib', 'seaborn']}
             ],

@@ -1,0 +1,51 @@
+name: ML CI/CD Pipeline (Train & Dockerize)
+
+on:
+  push:
+    paths:
+      - 'MLProject_folder/**'
+      - '.github/workflows/ci-cd-pipeline.yml'
+
+jobs:
+  train_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 2. Set up Python 3.12.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.7'
+
+      - name: 3. Install Core Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mlflow==2.19.0 pandas scikit-learn numpy optuna dagshub matplotlib seaborn
+
+      - name: 4. Run MLflow Project (Training)
+        run: |
+          cd MLProject_folder
+          mlflow run .
+
+      - name: 5. Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 6. Build and Tag Docker Image
+        run: |
+          cd MLProject_folder
+
+          # Trik MLOps: Mengambil Run ID dari hasil training terbaru secara dinamis
+          RUN_ID=$(ls -td mlruns/0/* | grep -v 'meta.yaml' | head -1 | basename)
+          echo "Model berhasil dilatih dengan Run ID: $RUN_ID"
+
+          # Membangun Docker Image menggunakan MLflow
+          mlflow models build-docker -m mlruns/0/$RUN_ID/artifacts/model -n ${{ secrets.DOCKER_USERNAME }}/credit-scoring-model:latest
+
+      - name: 7. Push Docker Image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/credit-scoring-model:latest

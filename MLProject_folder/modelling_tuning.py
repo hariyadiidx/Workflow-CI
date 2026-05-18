@@ -23,7 +23,7 @@ warnings.filterwarnings('ignore')
 
 # Untuk uji coba lokal di Colab saat ini, kita gunakan tracking lokal terlebih dahulu:
 mlflow.set_tracking_uri("file://" + os.path.abspath("mlruns"))
-mlflow.set_experiment("Eksperimen_Lokal")
+# mlflow.set_experiment("Eksperimen_Lokal")
 
 # ==============================================================================
 # 1. DATA LOADING & SPLITTING

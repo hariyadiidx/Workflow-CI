@@ -95,8 +95,17 @@ def objective(trial):
         mlflow.log_artifact(feat_path)
         plt.close();
 
-        # G. Log Model Machine Learning
-        mlflow.sklearn.log_model(clf, "model");
+       # G. Log Model Machine Learning (Dengan Paksaan Versi Python)
+custom_env = {
+    'channels': ['conda-forge'],
+    'dependencies': [
+        'python=3.12.7',
+        'pip',
+        {'pip': ['mlflow==2.19.0', 'pandas', 'scikit-learn', 'numpy', 'optuna', 'matplotlib', 'seaborn']}
+    ],
+    'name': 'mlflow-env'
+}
+mlflow.sklearn.log_model(clf, "model", conda_env=custom_env);
 
     return f1 # Kita mengoptimalkan berdasarkan skor F1 (karena target imbalanced)
 

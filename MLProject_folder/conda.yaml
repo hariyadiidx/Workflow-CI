@@ -1,15 +1,11 @@
 name: mlproject-env
 channels:
-  - defaults
+  - conda-forge
 dependencies:
   - python=3.12.7
   - pip
   - pip:
     - mlflow==2.19.0
-    - scikit-learn==1.5.2
     - pandas
+    - scikit-learn
     - numpy
-    - optuna
-    - dagshub
-    - matplotlib
-    - seaborn

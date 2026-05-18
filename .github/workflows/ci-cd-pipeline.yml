@@ -27,6 +27,7 @@ jobs:
       - name: 4. Run MLflow Project (Training)
         run: |
           cd MLProject_folder
+          rm -rf mlruns/
           mlflow run . --env-manager=local
 
       - name: 5. Log in to Docker Hub

@@ -3,7 +3,7 @@ name: ML CI/CD Pipeline (Train & Dockerize)
 on:
   push:
     paths:
-      - 'MLProject_folder/**'
+      - 'MLProject/**'
       - '.github/workflows/ci-cd-pipeline.yml'
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
 
       - name: 4. Run MLflow Project (Training)
         run: |
-          cd MLProject_folder
+          cd MLProject
           rm -rf mlruns/
           python modelling_tuning.py
 
@@ -38,7 +38,7 @@ jobs:
 
       - name: 6. Build and Tag Docker Image
         run: |
-          cd MLProject_folder
+          cd MLProject
           RUN_PATH=$(ls -td mlruns/0/* | grep -v 'meta.yaml' | head -1)
           RUN_ID=$(basename "$RUN_PATH")
           echo "Model berhasil dilatih dengan Run ID: $RUN_ID"

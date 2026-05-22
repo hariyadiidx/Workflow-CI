@@ -25,10 +25,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install mlflow==2.19.0 pandas scikit-learn numpy optuna dagshub matplotlib seaborn
 
-      - name: Run mlflow project
+       - name: Run mlflow project
         run: |
           cd MLProject
-          mlflow run .
+          mlflow run . --env-manager=local
 
       - name: Get latest MLflow run_id
         id: get_run_id

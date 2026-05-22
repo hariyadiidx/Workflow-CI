@@ -13,7 +13,7 @@ if __name__ == "__main__":
     # 1. KONFIGURASI TRACKING MLFLOW LOKAL (Sesuai Alamat Localhost Kriteria 2)
     # Menggunakan path absolut agar aman dieksekusi di Codespaces maupun runner GitHub Actions
     mlflow.set_tracking_uri("file://" + os.path.abspath("mlruns"))
-    mlflow.set_experiment("Eksperimen_Lokal")
+    # mlflow.set_experiment("Eksperimen_Lokal")
     
     # 2. MENGAKTIFKAN AUTOLOG (Wajib di kriteria Basic untuk file modelling.py)
     mlflow.autolog()

@@ -2,4 +2,4 @@ name: Credit_Scoring_Project
 
 entry_points:
   main:
-    command: "python modelling_tuning.py"
+    command: "python modelling.py"

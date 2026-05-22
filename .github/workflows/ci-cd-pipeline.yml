@@ -34,7 +34,8 @@ jobs:
         id: get_run_id
         run: |
           cd MLProject
-          RUN_ID=$(ls -td mlruns/0/* | grep -v 'meta.yaml' | head -1 | basename)
+          LATEST_DIR=$(ls -td mlruns/0/* | grep -v 'meta.yaml' | head -1)
+          RUN_ID=$(basename "$LATEST_DIR")
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Run ID terbaru adalah $RUN_ID"
 
